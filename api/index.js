@@ -18,11 +18,19 @@
 //                       `=---='
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
+const { conn } = require('./src/db/db');
+const { saveVideogames } = require('./src/utils/controllers/saveVideogamesApiData');
+const { saveGenres } = require('./src/utils/controllers/saveGenresApiData');
+const { savePlatforms } = require('./src/utils/controllers/savePlatformsApiData');
+
+const PORT = 3001;
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
-  server.listen(3001, () => {
-    console.log('%s listening at 3001'); // eslint-disable-line no-console
-  });
+conn.sync({ force: true }).then(async () => {
+	await saveVideogames();
+	await saveGenres();
+	await savePlatforms();
+	server.listen(PORT, () => {
+		console.log(`Server on http://localhost:${PORT}`); // eslint-disable-line no-console
+	});
 });
