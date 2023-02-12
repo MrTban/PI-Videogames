@@ -1,0 +1,50 @@
+// const getInfoApi = async () => {
+// 	try {
+// 		let i = 1;
+// 		let videogames = [];
+
+// 		while (i < 11) {
+// 			let apiData = await axios(`https://api.rawg.io/api/games/${i}?key=${KEY_NAME}`);
+
+// 			videogames.push(apiData);
+// 			i++;
+// 		}
+
+// 		videogames = (await Promise.all(videogames)).map((res) =>
+// 			res.data.results.map((vg) => {
+// 				return {
+// 					id: vg.id,
+// 					name: vg.name,
+// 					description: vg.description,
+// 					released: vg.released,
+// 					platforms: vg.platforms,
+// 					image: vg.image,
+// 					rating: vg.rating,
+// 				};
+// 			})
+// 		);
+
+// 		let allVideogames = [];
+// 		videogames.map((vg) => {
+// 			allVideogames = allVideogames.concat(vg);
+// 		});
+
+// 		return allVideogames;
+// 	} catch (error) {
+// 		return { error: error.message };
+// 	}
+// };
+
+// const saveVideogamesApiData = async () => {
+// 	try {
+// 		const allVideogames = await getInfoApi();
+
+// 		await Videogame.bulkCreate(allVideogames);
+
+// 		return allVideogames;
+// 	} catch (error) {
+// 		return { error: error.message };
+// 	}
+// };
+
+// module.exports = { saveVideogamesApiData };
