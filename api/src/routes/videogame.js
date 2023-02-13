@@ -48,6 +48,7 @@ router.get('/', async (req, res, next) => {
 			return {
 				id: el.id,
 				name: el.name,
+				description: el.slug,
 				image: el.background_image,
 				rating: el.rating,
 				released: el.released,
@@ -92,18 +93,20 @@ router.post('/', async (req, res, next) => {
 		const { name, image, platforms, description, rating, released, genres, createdInDb } =
 			req.body; //esto es lo que recibe del body
 
-		if (!name || !description) return res.status(404).json({ msg: 'ERROR!!' });
+		if (!name || !description) throw new Error('ERROR!!');
 		else {
-			const newGame = await Videogame.create({
-				name,
-				image: image
-					? image
-					: 'https://media.kasperskydaily.com/wp-content/uploads/sites/92/2020/02/17105257/game-ratings-featured.jpg',
-				description,
-				rating,
-				createdInDb,
-				released,
-				platforms,
+			const newGame = await Videogame.findOrCreate({
+				where: {
+					name,
+					image: image
+						? image
+						: 'https://media.kasperskydaily.com/wp-content/uploads/sites/92/2020/02/17105257/game-ratings-featured.jpg',
+					description,
+					rating,
+					createdInDb,
+					released,
+					platforms,
+				},
 			});
 
 			let genresId = await Genre.findAll({
@@ -113,16 +116,15 @@ router.post('/', async (req, res, next) => {
 					},
 				},
 			});
-			console.log(genresId);
 
 			newGame.addGenre(genresId);
 
-			res.status(200).json({ msg: 'VideoGame creado con exito' });
+			res.status(200).json(newGame);
 		}
 
 		//console.log(total)
 	} catch (error) {
-		next(error);
+		res.status(404).send({ error: error.message });
 
 		//aca el sigueinte midleware es el del manejo de errores en app.js
 	}
@@ -140,8 +142,12 @@ const getApiId = async (id) => {
 		rating: dataUrl.rating,
 		image: dataUrl.background_image,
 		released: dataUrl.released,
-		platforms: dataUrl.platforms.map((el) => el.platform.name),
-		genres: dataUrl.genres.map((el) => el.name),
+		publishers: dataUrl.publishers.map((pb) => pb.name),
+		website: dataUrl.website,
+		platforms: dataUrl.platforms.map((pf) => pf.platform.name),
+		genres: dataUrl.genres.map((g) => g.name),
+		stores: dataUrl.stores.map((s) => s.store.name),
+		tags: dataUrl.tags.map((t) => t.name),
 	};
 
 	return detailId;
