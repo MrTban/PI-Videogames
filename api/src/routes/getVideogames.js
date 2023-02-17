@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const axios = require('axios');
-const { getInfoTotal, postVideoGame } = require('./controllers');
-const { Videogame, Genre } = require('../db');
+const { getInfoTotal, postVideoGame } = require('../controllers/controllers');
+const { Videogame, Genre } = require('../db/db');
 const { API_KEY } = process.env;
 
 const router = Router();
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 		);
 		filterName.length
 			? res.status(200).send(filterName)
-			: res.status(404).send('No se encuentra el juego con ese nombre');
+			: res.status(404).send('Cannot find the game with this name');
 	} else {
 		res.status(200).json(allGames);
 	}
@@ -64,7 +64,6 @@ router.post('/', async (req, res) => {
 		const objVideoGame = req.body;
 		const newGame = await postVideoGame(objVideoGame);
 		res.status(200).json(newGame);
-		//res.status(200).send("videojuego creado con éxito");
 	} catch (error) {
 		res.status(404).send({ error: error.message });
 	}
