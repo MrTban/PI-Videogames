@@ -1,0 +1,20 @@
+.bodyHome {
+	background-color: #0f1011;
+	/* min-height: 100vh;
+	min-width: 100vh; */
+	font-family: 'GT Walsheim Pro';
+	color: #e6e6e6;
+}
+
+.card {
+	/* width: 100vh; */
+	display: flex;
+	flex-wrap: wrap;
+	/* gap: clamp(40px, 10vw, 25px); */
+	justify-content: center;
+}
+
+.homeTitle {
+	text-align: center;
+	cursor: default;
+}

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
 	getVideogames,
 	filterVideogamesByGenres,
-	filterVideogamesByPlatforms,
 	filterCreated,
 	orderByName,
 	orderByRating,
@@ -16,21 +15,20 @@ import Card from '../Card/Card';
 import Paged from '../Paged/Paged';
 import Loading from '../Loader/Loader';
 import FilterSelects from '../Filters/Filters';
+import style from './Home.module.css';
 
 const Home = () => {
 	const dispatch = useDispatch();
 
 	const [carga, SetCarga] = useState(true);
 
-	// const [loading, setLoading] = useState(true);
-
-	const [, /* order */ setOrder] = useState('');
-
 	const allVideogames = useSelector((state) => state.allVideogames);
-	// const allGenres = useSelector((state) => state.genres);
+	const allGenres = useSelector((state) => state.genres);
+	const [, /* order */ setOrder] = useState('');
 
 	const [currentPage, setCurrentPage] = useState(1);
 	const [videogamesPerPage, setvideogamesPerPage] = useState(15);
+
 	const indexOfLastGame = currentPage * videogamesPerPage;
 	const indexOfFirstGame = indexOfLastGame - videogamesPerPage;
 	const currentVideogames = allVideogames.slice(indexOfFirstGame, indexOfLastGame);
@@ -44,7 +42,7 @@ const Home = () => {
 		dispatch(getGenres());
 	}, [dispatch]);
 
-	const handleResetVG = (e) => {
+	const handleResetVg = (e) => {
 		e.preventDefault();
 		dispatch(getVideogames());
 	};
@@ -53,13 +51,9 @@ const Home = () => {
 		dispatch(filterVideogamesByGenres(e.target.value));
 	};
 
-	const handleFilterPlatforms = (e) => {
-		dispatch(filterVideogamesByPlatforms(e.target.value));
-	};
-
-	function handleFilterCreated(e) {
+	const handleFilterCreated = (e) => {
 		dispatch(filterCreated(e.target.value));
-	}
+	};
 
 	const handleSortByRating = (e) => {
 		e.preventDefault();
@@ -80,42 +74,42 @@ const Home = () => {
 	}
 
 	return (
-		<div>
+		<div className={style.bodyHome}>
 			{allVideogames.length ? (
 				<div>
 					<div>
-						<h1>VIDEO GAMES</h1>
+						<h1 className={style.homeTitle}>
+							<i> VIDEO GAMES </i>
+						</h1>
 					</div>
 
-					<br />
-					<br />
-
-					<button
-						onClick={(e) => {
-							handleResetVG(e);
-						}}
-					>
-						Reset Games
-					</button>
-
-					<br />
-
 					<div>
-						<NavBar setCurrentPage={setCurrentPage} />
+						<NavBar />
+						<br />
+						<button
+							onClick={(e) => {
+								handleResetVg(e);
+							}}
+						>
+							Reset Games
+						</button>
+						<br />
+						<br />
 						<FilterSelects
 							handleSortByName={handleSortByName}
 							handleFilterGenres={handleFilterGenres}
 							handleSortByRating={handleSortByRating}
-							handleFilterPlatforms={handleFilterPlatforms}
 							handleFilterCreated={handleFilterCreated}
 						/>
+						<br />
 						<Paged
 							videogamesPerPage={videogamesPerPage}
 							allVideogames={allVideogames.length}
 							paged={paged}
 						/>
+						<br />
 					</div>
-					<div>
+					<div className={style.card}>
 						{currentVideogames.length > 0 ? (
 							currentVideogames.map((e) => {
 								return (
@@ -136,6 +130,12 @@ const Home = () => {
 							<Loading />
 						)}
 					</div>
+					<br />
+					<Paged
+						videogamesPerPage={videogamesPerPage}
+						allVideogames={allVideogames.length}
+						paged={paged}
+					/>
 				</div>
 			) : (
 				<p>Hola</p>

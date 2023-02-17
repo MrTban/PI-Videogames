@@ -1,0 +1,15 @@
+.bodyForm {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	background-color: #0f1011;
+	min-height: 100vh;
+	min-width: 100vh;
+	color: white;
+}
+
+.error {
+	color: red;
+}

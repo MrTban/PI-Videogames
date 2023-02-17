@@ -1,0 +1,20 @@
+.detailContainer {
+	font-family: 'GT Walsheim Pro';
+	cursor: default;
+	color: #fff;
+}
+
+h4 {
+	color: #fff;
+	font-size: 20px;
+}
+
+p {
+	color: #ccc;
+	font-size: 15px;
+	line-height: 1.65;
+}
+
+.descriptionContainer {
+	background-color: #1a1a1a;
+}

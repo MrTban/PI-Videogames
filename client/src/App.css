@@ -1,4 +1,10 @@
-.App {
+html {
+	background-color: #0f1011;
+	min-height: 100vh;
+	min-width: 100vh;
+}
+
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +41,19 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+@font-face {
+	font-family: 'SNES';
+	font-style: normal;
+	font-weight: normal;
+	src: local('SNES'), url('./assets/Fonts//SNES.ttf') format('woff');
+}
+
+@font-face {
+	font-family: 'GT Walsheim Pro';
+	font-style: normal;
+	font-weight: normal;
+	src: local('GT Walsheim Pro'),
+		url('./assets/Fonts/GT\ Walsheim\ Pro.ttf') format('woff');
 }

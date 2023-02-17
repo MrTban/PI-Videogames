@@ -1,6 +1,7 @@
 import React from 'react';
+import style from './Paged.module.css';
 
-const Paged = ({ allVideogames, videogamesPerPage, paged }) => {
+const Paged = ({ videogamesPerPage, allVideogames, paged }) => {
 	const pageNumbers = [];
 
 	for (let i = 1; i <= Math.ceil(allVideogames / videogamesPerPage); i++) {
@@ -8,15 +9,18 @@ const Paged = ({ allVideogames, videogamesPerPage, paged }) => {
 	}
 
 	return (
-		<nav>
+		<section className={style.paged}>
 			<ul>
-				{pageNumbers?.map((number) => (
-					<li key={number}>
-						<button onClick={() => paged(number)}>{number}</button>
-					</li>
-				))}
+				{pageNumbers &&
+					pageNumbers.map((number) => (
+						<li className='number' key={number}>
+							<button className={style.active} onClick={() => paged(number)}>
+								<i>{number}</i>
+							</button>
+						</li>
+					))}
 			</ul>
-		</nav>
+		</section>
 	);
 };
 

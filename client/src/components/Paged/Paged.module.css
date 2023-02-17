@@ -1,0 +1,40 @@
+.paged {
+	font-family: 'Roboto', sans-serif;
+	margin: 20px 0;
+}
+
+.paged ul {
+	list-style: none;
+	text-align: center;
+
+	font-weight: 300;
+	line-height: 1.5;
+}
+
+.paged ul li {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.paged ul li button {
+	display: block;
+	padding: 10px 20px;
+	background: #1abc9c;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 16px;
+	border: none;
+	border-radius: 5px;
+	color: #0f1011;
+	cursor: pointer;
+}
+
+.paged ul li button:hover {
+	background: #037e8c;
+	transform: scale(1.25);
+}
+
+/* .paged ul li .active {
+	background: #037e8c;
+	font-weight: bold;
+} */
