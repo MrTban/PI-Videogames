@@ -1,216 +1,312 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { postVideogames, getGenres, getVideogames } from '../../redux/actions/index';
+import { Link, useHistory } from 'react-router-dom';
+import {
+	postVideogames,
+	getGenres,
+	getVideogames,
+	getPlatforms,
+} from '../../redux/actions/index';
 import style from './CreateGame.module.css';
+import Validate from './Validation';
 
-function validate(input) {
-	let errors = {};
-	if (!input.name) {
-		errors.name = 'The Name field is required to be completed.';
-	} else if (!/^[a-zA-Z0-9-() .]+$/.test(input.name)) {
-		errors.name = 'Only letters, numbers, hyphens and parentheses are accepted..';
-	} else if (input.name > 40) {
-		errors.name = 'The name is too long.';
-	} else if (!input.description) {
-		errors.description = 'The field Description is required to be completed.';
-	} else if (input.description.length > 750) {
-		errors.description = 'Description is too long (Max = 750 characters).';
-	} else if (!input.released) {
-		errors.released = 'The Release date field must be completed.';
-	} else if (input.rating > 5.0) {
-		errors.rating = 'The rating cannot be higher than 5.0';
-	} else if (input.rating < 1.0) {
-		errors.rating = 'The rating cannot be less than 1.0';
-	} else if (!input.genres.length) {
-		errors.genres = 'You must select one or more Genres.';
-	} else if (!input.platforms.length) {
-		errors.platforms = 'You must select one or more Platforms.';
-	}
-	return errors;
-}
-
-export default function GameCreate() {
+const GameCreate = () => {
 	const dispatch = useDispatch();
+
+	const history = useHistory();
 
 	const platforms = useSelector((state) => state.platforms);
 	const genres = useSelector((state) => state.genres);
-
-	const [errors, setErrors] = useState({});
 
 	const [input, setInput] = useState({
 		name: '',
 		description: '',
 		released: '',
-		rating: '',
+		rating: 0,
 		image: '',
 		platforms: [],
 		genres: [],
 	});
 
-	function handleSubmit(e) {
+	const [errors, setErrors] = useState({
+		// name: '',
+		// description: '',
+		// released: '',
+		// rating: '',
+		// image: '',
+		// platforms: [],
+		// genres: [],
+	});
+
+	const handleSubmit = (e) => {
 		e.preventDefault();
-		setErrors(validate(input));
-		let error = validate(input);
+		setErrors(Validate(input));
+		let error = Validate(input);
 		if (Object.values(error).length !== 0) {
-			alert('Error en el formulario');
+			alert('Missing Info');
 		} else {
 			dispatch(postVideogames(input));
-			alert('Se creó el Video Juego');
+			alert('The Video Game was created');
 			setInput({
 				name: '',
 				description: '',
 				image: '',
 				released: '',
 				rating: '',
-				genres: [],
 				platforms: [],
+				genres: [],
 			});
+			history.push('/home');
 		}
-	}
-	function handleChange(e) {
+	};
+
+	const handleChange = (e) => {
 		setInput({
 			...input,
 			[e.target.name]: e.target.value,
 		});
 		setErrors(
-			validate({
+			Validate({
 				...input,
 				[e.target.name]: e.target.value,
 			})
 		);
-		console.log(input);
-	}
+	};
 
-	function handleSelectPlatforms(e) {
-		setInput({
-			...input,
-			platforms: [...input.platforms, e.target.value],
-		});
-	}
-
-	function handleSelectGenres(e) {
+	const handleSelectGenres = (e) => {
 		setInput({
 			...input,
 			genres: [...input.genres, e.target.value],
 		});
-	}
+	};
 
-	function handleDeleteGenres(e) {
+	const handleSelectPlatforms = (e) => {
+		setInput({
+			...input,
+			platforms: [...input.platforms, e.target.value],
+		});
+	};
+
+	const handleDeleteGenres = (e) => {
 		setInput({
 			...input,
 			genres: input.genres.filter((el) => el !== e),
 		});
-	}
+	};
 
-	function handleDeletePlatforms(e) {
+	const handleDeletePlatforms = (e) => {
 		setInput({
 			...input,
 			platforms: input.platforms.filter((el) => el !== e),
 		});
-	}
+	};
 
 	useEffect(() => {
 		dispatch(getGenres());
+		dispatch(getPlatforms());
 		dispatch(getVideogames());
 	}, [dispatch]);
 
 	return (
-		<div>
+		<div className={style.bodyForm}>
 			<Link to='/home'>
-				<button>Back to Home</button>
+				<button className={style.botonback}>
+					<i>Back to Home</i>
+				</button>
 			</Link>
-			<h1>Create Game</h1>
-			<form onSubmit={(e) => handleSubmit(e)}>
-				<div>
-					<label>Name: </label>
+			<form onSubmit={(e) => handleSubmit(e)} className={style.Form}>
+				<h1 className={style.titleForm}>
+					<i> Welcome </i>
+				</h1>
+				<h3 className={style.subtitleForm}>
+					<i>Let's register your game!</i>
+				</h3>
+				<div className={`${style.input_container} ${style.ic1}`}>
 					<input
 						id='input'
 						type='text'
 						value={input.name}
 						name='name'
 						onChange={handleChange}
-						placeholder='Name...'
+						placeholder=''
+						autoComplete='off'
+						className={style.inputFomr}
 					/>
-					{errors.name && <p className={style.error}>{errors.name}</p>}
+					<div className={style.cut}></div>
+					<label className={style.placeholder}>
+						<i>Name</i>
+					</label>
 				</div>
-				<div>
-					<label>Description: </label>
+				<div className={`${style.input_container} ${style.ic2}`}>
 					<input
 						id='input'
 						type='text'
 						value={input.description}
 						name='description'
 						onChange={handleChange}
-						placeholder='Description...'
+						placeholder=''
+						autoComplete='off'
+						className={style.inputFomr}
 					/>
-					{errors.description && <p className={style.error}>{errors.description}</p>}
+					<div className={style.cut}></div>
+					<label className={style.placeholder}>
+						<i>Description</i>
+					</label>
 				</div>
-				<div>
-					<label>Released Date: </label>
+				<div className={`${style.input_container} ${style.ic2}`}>
+					<input
+						id='input'
+						type='text'
+						value={input.image}
+						name='image'
+						onChange={handleChange}
+						placeholder=''
+						accept='.jpg, .jpeg, .png, .webp'
+						className={style.inputFomr}
+					/>
+					<div className={style.cut}></div>
+					<label className={style.placeholder}>
+						<i>Image</i>
+					</label>
+				</div>
+				<div className={`${style.input_container} ${style.ic2}`}>
+					{/* <label>Released Date: </label> */}
 					<input
 						id='input'
 						type='date'
 						value={input.released}
 						name='released'
 						onChange={handleChange}
+						className={style.inputFomr}
 					/>
-					{errors.released && <p className={style.error}>{errors.released}</p>}
+					<div className={style.cut}></div>
+					<label className={style.placeholder}>
+						<i>Released</i>
+					</label>
 				</div>
-				<div>
-					<label>Rating: </label>
+				<div className={`${style.input_container} ${style.ic2}`}>
+					{/* <label>Rating: </label> */}
 					<input
 						id='input'
 						type='number'
 						value={input.rating}
 						name='rating'
 						onChange={handleChange}
-						placeholder='0.00 to 5.00'
+						min='0.00'
+						max='5'
+						className={style.inputFomr}
 					/>
-					{errors.rating && <p className={style.error}>{errors.rating}</p>}
+					<div className={style.cut}></div>
+					<label className={style.placeholder}>
+						<i>Rating</i>
+					</label>
 				</div>
-				<div>
-					<label>Genres: </label>
-					<select onChange={(e) => handleSelectGenres(e)}>
+				<div className={`${style.input_container} ${style.ic2}`}>
+					<select onChange={(e) => handleSelectGenres(e)} className={style.inputFomr}>
+						<option value='' select disable hidden>
+							Select Genre/s
+						</option>
 						{genres.map((g) => (
 							<option value={g.name}>{g.name}</option>
 						))}
 					</select>
-					{errors.genres && <p className={style.error}>{errors.genres}</p>}
-					<ul>
-						<p>Selected Genres:</p>
+					<div className={style.cut}></div>
+					<label className={style.placeholder}>
+						<i>Select Genre/s</i>
+					</label>
+				</div>
+				<div className={`${style.input_container} ${style.ic2}`}>
+					<select onChange={(e) => handleSelectPlatforms(e)} className={style.inputFomr}>
+						<option value='' select disable hidden>
+							Select Platform/s
+						</option>
+						{platforms.map((g) => (
+							<option value={g.name}>{g.name}</option>
+						))}
+					</select>
+					<div className={style.cut}></div>
+					<label className={style.placeholder}>
+						<i>Select Platform/s</i>
+					</label>
+				</div>
+
+				<div className={`${style.error}`}>
+					{errors.name && (
+						<p className={style.error}>
+							&#x26A0; &nbsp;<i> {errors.name} </i>&nbsp; &#x26A0;
+						</p>
+					)}
+					{errors.description && (
+						<p className={style.error}>
+							&#x26A0; &nbsp;<i> {errors.description} </i>&nbsp; &#x26A0;
+						</p>
+					)}
+					{errors.released && (
+						<p className={style.error}>
+							&#x26A0; &nbsp;<i> {errors.released} </i>&nbsp; &#x26A0;
+						</p>
+					)}
+					{errors.rating && (
+						<p className={style.error}>
+							&#x26A0; &nbsp;<i> {errors.rating} </i>&nbsp; &#x26A0;
+						</p>
+					)}
+
+					{errors.genres && (
+						<p className={style.error1}>
+							<i>{errors.genres}</i>
+						</p>
+					)}
+					{errors.platforms && (
+						<p className={style.error1}>
+							<i>{errors.platforms}</i>
+						</p>
+					)}
+				</div>
+
+				<div className={`${style.selectedArea}`}>
+					<ul className={style.lista}>
+						<p>
+							<i>Selected Genres:</i>
+						</p>
 						{input.genres.map((a) => (
-							<li>
-								<p>{a}</p>
-								<button type='button' value={a} onClick={() => handleDeleteGenres(a)}>
-									x
-								</button>
+							<li className={style.liS}>
+								<p onClick={() => handleDeleteGenres(a)}>{a}</p>
+								{/* <button type='button' value={a}>
+								x
+							</button> */}
 							</li>
 						))}
 					</ul>
 				</div>
-				<lebel>Platforms: </lebel>
-				<select onChange={(e) => handleSelectPlatforms(e)}>
-					{platforms.map((g) => (
-						<option value={g}>{g}</option>
-					))}
-				</select>
-				{errors.platforms && <p className={style.error}>{errors.platforms}</p>}
-				<ul>
-					<p>Selected Platforms:</p>
-					{input.platforms.map((e) => (
-						<li>
-							<p>{e}</p>
-							<button type='button' value={e} onClick={() => handleDeletePlatforms(e)}>
-								x
-							</button>
-						</li>
-					))}
-				</ul>
-				<br />
-				<br />
-				<button type='submit'>Create</button>
+
+				<div className={`${style.selectedArea1} ${style.ic2}`}>
+					<ul className={style.lista}>
+						<p>
+							<i>Selected Platforms:</i>
+						</p>
+						{input.platforms.map((e) => (
+							<li className={style.liS}>
+								<p onClick={() => handleDeletePlatforms(e)}>{e}</p>
+								{/* <button type='button' value={e} onClick={() => handleDeletePlatforms(e)}>
+									x
+								</button> */}
+							</li>
+						))}
+					</ul>
+				</div>
+
+				<button type='submit' className={style.submit}>
+					<i>Create</i>
+				</button>
+				{/* {Object.keys(errors).length === 0 ? (
+					<button type='submit' className={style.submit}>
+						<span>Create</span>
+					</button>
+				) : null} */}
 			</form>
 		</div>
 	);
-}
+};
+
+export default GameCreate;

@@ -6,9 +6,9 @@ import Loading from '../Loader/Loader';
 import style from './Detail.module.css';
 
 const Detail = () => {
-	const gameDetail = useSelector((state) => state.detail);
-
 	const dispatch = useDispatch();
+
+	const gameDetail = useSelector((state) => state.detail);
 
 	const { id } = useParams();
 
@@ -45,21 +45,27 @@ const Detail = () => {
 							<h4>Publishers:</h4>
 							<p>{gameDetail.publishers}</p>
 							<h4>Website:</h4>
-							<p>{gameDetail.website}</p>
+							<a href={gameDetail.website}>{gameDetail.website}</a>
 						</div>
 						<div>
 							<h4>Platforms:</h4>
-							{gameDetail.platforms?.map((p) => (
-								<p>{p}</p>
-							))}
+							<p>
+								{gameDetail.platforms && typeof gameDetail.platforms[0] === 'object'
+									? gameDetail.platforms?.map((p) => p.name + ', ')
+									: gameDetail.platforms?.join(', ')}
+							</p>
 							<h4>Genres:</h4>
-							{gameDetail.genres?.map((g) => (
-								<p>{g.name}</p>
-							))}
+							<p>
+								{gameDetail.genres && typeof gameDetail.genres[0] === 'object'
+									? gameDetail.genres?.map((g) => g.name + ', ')
+									: gameDetail.genres?.join(', ')}
+							</p>
 							<h4>Stores:</h4>
-							{gameDetail.stores?.map((s) => (
-								<p>{s}</p>
-							))}
+							<p>
+								{gameDetail.stores && typeof gameDetail.stores[0] === 'object'
+									? gameDetail.stores?.map((s) => s.name + ', ')
+									: gameDetail.stores?.join(', ')}
+							</p>
 							<h4>Tags:</h4>
 							<p>{gameDetail.tags.join(', ')}</p>
 						</div>

@@ -4,6 +4,7 @@ import LandingPage from './components/LandingPage/LandingPage';
 import Home from './components/Home/Home';
 import Detail from './components/Detail/Detail';
 import CreateGame from './components/CreateGame/CreateGame';
+import About from './components/About/About';
 
 function App() {
 	return (
@@ -12,6 +13,7 @@ function App() {
 				<Switch>
 					<Route exact path='/' component={LandingPage} />
 					<Route path='/home' component={Home} />
+					<Route path='/about' component={About} />
 					<Route path='/detail/:id' component={Detail} />
 					<Route path='/creategame' component={CreateGame} />
 				</Switch>

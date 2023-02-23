@@ -27,10 +27,11 @@
 	border-radius: 5px;
 	color: #0f1011;
 	cursor: pointer;
+	box-shadow: inset 0 0 6px #0f1011;
 }
 
 .paged ul li button:hover {
-	background: #037e8c;
+	background: #28e2bc;
 	transform: scale(1.25);
 }
 

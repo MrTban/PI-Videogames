@@ -1,20 +1,25 @@
 .bodyHome {
 	background-color: #0f1011;
-	/* min-height: 100vh;
-	min-width: 100vh; */
 	font-family: 'GT Walsheim Pro';
 	color: #e6e6e6;
 }
 
-.card {
-	/* width: 100vh; */
+.allVideogamesContainer {
 	display: flex;
 	flex-wrap: wrap;
-	/* gap: clamp(40px, 10vw, 25px); */
 	justify-content: center;
 }
 
-.homeTitle {
+/* .homeTitle {
 	text-align: center;
 	cursor: default;
+} */
+
+.logo {
+	display: flex;
+	justify-content: center;
+}
+
+.logo img {
+	width: 200px;
 }

@@ -1,33 +1,33 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	getVideogames,
 	filterVideogamesByGenres,
+	filterVideogamesByPlatforms,
 	filterCreated,
-	orderByName,
-	orderByRating,
-	getGenres,
+	sortByRating,
+	sortByName,
 } from '../../redux/actions';
 import NavBar from '../NavBar/NavBar';
 import Card from '../Card/Card';
 import Paged from '../Paged/Paged';
 import Loading from '../Loader/Loader';
-import FilterSelects from '../Filters/Filters';
+// import FilterSelects from '../Filters/Filters';
 import style from './Home.module.css';
+import defaultImage from '../../assets/imagen.jpg';
+import logo from '../../assets/tbanrawg.png';
 
 const Home = () => {
 	const dispatch = useDispatch();
 
 	const [carga, SetCarga] = useState(true);
 
-	const allVideogames = useSelector((state) => state.allVideogames);
-	const allGenres = useSelector((state) => state.genres);
-	const [, /* order */ setOrder] = useState('');
+	const allVideogames = useSelector((state) => state.videogames);
+	const [, /* order */ setOrden] = useState('');
 
 	const [currentPage, setCurrentPage] = useState(1);
-	const [videogamesPerPage, setvideogamesPerPage] = useState(15);
+	const [videogamesPerPage] = useState(15);
 
 	const indexOfLastGame = currentPage * videogamesPerPage;
 	const indexOfFirstGame = indexOfLastGame - videogamesPerPage;
@@ -37,37 +37,46 @@ const Home = () => {
 		setCurrentPage(pageNumber);
 	};
 
-	useEffect(() => {
-		dispatch(getVideogames()).then(() => SetCarga(false));
-		dispatch(getGenres());
-	}, [dispatch]);
-
-	const handleResetVg = (e) => {
+	function handleResetVg(e) {
 		e.preventDefault();
 		dispatch(getVideogames());
-	};
+	}
 
-	const handleFilterGenres = (e) => {
+	function handleFilterGenres(e) {
+		e.preventDefault();
+		setCurrentPage(1);
+		setOrden(e.target.value);
 		dispatch(filterVideogamesByGenres(e.target.value));
-	};
+	}
 
-	const handleFilterCreated = (e) => {
+	function handleFilterPlatfomrs(e) {
+		e.preventDefault();
+		setCurrentPage(1);
+		setOrden(e.target.value);
+		dispatch(filterVideogamesByPlatforms(e.target.value));
+	}
+
+	function handleFilterCreated(e) {
 		dispatch(filterCreated(e.target.value));
-	};
+	}
 
-	const handleSortByRating = (e) => {
+	function handleSortByRating(e) {
 		e.preventDefault();
-		dispatch(orderByRating(e.target.value));
 		setCurrentPage(1);
-		setOrder(e.target.value);
-	};
+		setOrden(e.target.value);
+		dispatch(sortByRating(e.target.value));
+	}
 
-	const handleSortByName = (e) => {
+	function handleSortByName(e) {
 		e.preventDefault();
-		dispatch(orderByName(e.target.value));
 		setCurrentPage(1);
-		setOrder(e.target.value);
-	};
+		setOrden(e.target.value);
+		dispatch(sortByName(e.target.value));
+	}
+
+	useEffect(() => {
+		dispatch(getVideogames()).then(() => SetCarga(false));
+	}, [dispatch]);
 
 	if (carga) {
 		return <Loading />;
@@ -77,68 +86,55 @@ const Home = () => {
 		<div className={style.bodyHome}>
 			{allVideogames.length ? (
 				<div>
-					<div>
-						<h1 className={style.homeTitle}>
-							<i> VIDEO GAMES </i>
-						</h1>
+					<div className={style.logo}>
+						{/* <h1 className={style.homeTitle}>
+							<i> TBAN GAMES </i>
+						</h1> */}
+						<img src={logo} alt='tbanlogo' />
 					</div>
 
-					<div>
-						<NavBar />
-						<br />
-						<button
-							onClick={(e) => {
-								handleResetVg(e);
-							}}
-						>
-							Reset Games
-						</button>
-						<br />
-						<br />
-						<FilterSelects
+					<div className={style.sidebarMenu}>
+						<NavBar
+							setCurrentPage={setCurrentPage}
 							handleSortByName={handleSortByName}
 							handleFilterGenres={handleFilterGenres}
 							handleSortByRating={handleSortByRating}
 							handleFilterCreated={handleFilterCreated}
+							handleFilterPlatfomrs={handleFilterPlatfomrs}
+							handleResetVg={handleResetVg}
 						/>
+					</div>
+					<br />
+					<br />
+					<div>
+						{/* <Paged
+							videogamesPerPage={videogamesPerPage}
+							allVideogames={allVideogames.length}
+							paged={paged}
+						/> */}
+						<br />
+						<div className={style.allVideogamesContainer}>
+							{currentVideogames.map((e) => (
+								<Card
+									key={e.id}
+									id={e.id}
+									name={e.name}
+									image={e.image ? e.image : defaultImage}
+									rating={e.rating}
+									genres={e.genres}
+								/>
+							))}
+						</div>
 						<br />
 						<Paged
 							videogamesPerPage={videogamesPerPage}
 							allVideogames={allVideogames.length}
 							paged={paged}
 						/>
-						<br />
 					</div>
-					<div className={style.card}>
-						{currentVideogames.length > 0 ? (
-							currentVideogames.map((e) => {
-								return (
-									<>
-										<Link to={'/home/' + e.id}></Link>
-										<Card
-											key={e.id}
-											id={e.id}
-											name={e.name}
-											image={e.img ? e.img : e.image}
-											rating={e.rating}
-											genres={e.genres}
-										/>
-									</>
-								);
-							})
-						) : (
-							<Loading />
-						)}
-					</div>
-					<br />
-					<Paged
-						videogamesPerPage={videogamesPerPage}
-						allVideogames={allVideogames.length}
-						paged={paged}
-					/>
 				</div>
 			) : (
-				<p>Hola</p>
+				<Loading />
 			)}
 		</div>
 	);

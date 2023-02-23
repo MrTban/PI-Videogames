@@ -19,13 +19,20 @@ const Card = ({ id, name, image, genres, rating }) => {
 							<h4>
 								<i>{rating} &#9733;</i>
 							</h4>
-							<h4>
+							<h3>
+								<i>
+									{genres && typeof genres[0] === 'object'
+										? genres?.map((g) => g.name + ', ')
+										: genres?.join(', ')}
+								</i>
+							</h3>
+							{/* <h4>
 								{genres && (
 									<i>
-										<p>{genres.map((g) => Object.values(g)).join(' ,  ')}</p>
+										<p>{genres.map((g) => Object.values(g))}</p>
 									</i>
 								)}
-							</h4>
+							</h4> */}
 							<Link to={`/detail/${id}`} className={style.linkbutton}>
 								<button>
 									<i>Details</i>
