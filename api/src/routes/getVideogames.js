@@ -1,23 +1,27 @@
 const { Router } = require('express');
 const axios = require('axios');
-const { getInfoTotal, postVideoGame } = require('../controllers/controllers');
-const { Videogame, Genre } = require('../db/db');
+const { getAllGames /*  postVideoGame  */ } = require('../controllers/controllers');
+const { Videogame, Genre, Platform } = require('../db/db');
 const { API_KEY } = process.env;
 
 const router = Router();
 
 router.get('/', async (req, res) => {
-	const { name } = req.query;
-	const allGames = await getInfoTotal();
-	if (name) {
-		const filterName = await allGames.filter((vg) =>
-			vg.name.toLowerCase().includes(name.toLocaleLowerCase())
-		);
-		filterName.length
-			? res.status(200).send(filterName)
-			: res.status(404).send('Cannot find the game with this name');
-	} else {
-		res.status(200).json(allGames);
+	try {
+		const { name } = req.query;
+		const allGames = await getAllGames();
+		if (name) {
+			const filterName = await allGames.filter((game) =>
+				game.name.toLowerCase().includes(name.toLocaleLowerCase())
+			);
+			filterName.length
+				? res.status(200).send(filterName)
+				: res.status(404).send('Cannot find the game with this name');
+		} else {
+			res.status(200).send(allGames);
+		}
+	} catch (error) {
+		res.status(500).send({ error: error.message });
 	}
 });
 
@@ -28,7 +32,7 @@ router.get('/:id', async (req, res) => {
 			const game = await Videogame.findByPk(id, { include: Genre });
 			res.status(200).json(game);
 		} else {
-			const gameApi = await axios.get(
+			const response = await axios.get(
 				`https://api.rawg.io/api/games/${id}?key=${API_KEY}`,
 				{
 					headers: {
@@ -37,35 +41,55 @@ router.get('/:id', async (req, res) => {
 				}
 			);
 			const result = {
-				id: gameApi.data.id,
-				name: gameApi.data.name,
-				description: gameApi.data.description_raw,
-				rating: gameApi.data.rating,
-				image: gameApi.data.background_image,
-				released: gameApi.data.released,
-				publishers: gameApi.data.publishers.map((pb) => pb.name),
-				website: gameApi.data.website,
-				genres: gameApi.data.genres.map((gen) => {
-					return { id: gen.id, name: gen.name };
-				}),
-				platforms: gameApi.data.platforms.map((el) => el.platform.name),
-				stores: gameApi.data.stores.map((s) => s.store.name),
-				tags: gameApi.data.tags.map((t) => t.name),
+				id: response.data.id,
+				name: response.data.name,
+				description: response.data.description_raw,
+				rating: response.data.rating,
+				image: response.data.background_image,
+				released: response.data.released,
+				publishers: response.data.publishers.map((pb) => pb.name),
+				website: response.data.website,
+				genres: response.data.genres.map((gen) => gen.name),
+				platforms: response.data.platforms.map((el) => el.platform.name),
+				stores: response.data.stores.map((s) => s.store.name),
+				tags: response.data.tags.map((t) => t.name),
 			};
-			res.status(200).json(result);
+			res.status(200).send(result);
 		}
 	} catch (error) {
-		res.status(404).send({ error: error.message });
+		res.status(500).send({ error: error.message });
 	}
 });
 
 router.post('/', async (req, res) => {
 	try {
-		const objVideoGame = req.body;
-		const newGame = await postVideoGame(objVideoGame);
-		res.status(200).json(newGame);
+		const { name, description, released, rating, image, platforms, genres } = req.body;
+		const newGame = await Videogame.create({
+			name,
+			description,
+			released,
+			rating,
+			image,
+		});
+		platforms.map(async (g) => {
+			const [platformDB, created] = await Platform.findOrCreate({
+				where: {
+					name: g,
+				},
+			});
+			await newGame.addPlatform(platformDB);
+		});
+		genres.map(async (g) => {
+			const [genreDB, created] = await Genre.findOrCreate({
+				where: {
+					name: g,
+				},
+			});
+			await newGame.addGenre(genreDB);
+		});
+		res.status(201).json({ ...newGame.dataValues, platforms: platforms, genres: genres });
 	} catch (error) {
-		res.status(404).send({ error: error.message });
+		res.status(500).send({ error: error.message });
 	}
 });
 

@@ -22,12 +22,8 @@ const getInfoApi = async () => {
 					image: vg.background_image,
 					released: vg.released,
 					rating: vg.rating,
-					platforms: vg.platforms.map((e) => {
-						return e.platform.name;
-					}),
-					genres: vg.genres.map((e) => {
-						return { name: e.name };
-					}),
+					platforms: vg.platforms.map((e) => e.platform.name),
+					genres: vg.genres.map((e) => e.name),
 				});
 			});
 			apiUrl = info.data.next;
@@ -38,10 +34,17 @@ const getInfoApi = async () => {
 	}
 };
 
-const getInfoDb = async () => {
+const getInfo = async () => {
 	const infoDb = await Videogame.findAll({
 		include: {
 			model: Genre,
+			attributes: ['name'],
+			through: {
+				attributes: [],
+			},
+		},
+		include: {
+			model: Platform,
 			attributes: ['name'],
 			through: {
 				attributes: [],
@@ -52,21 +55,17 @@ const getInfoDb = async () => {
 	return infoDb;
 };
 
-const getInfoTotal = async () => {
+const getAllGames = async () => {
 	const infoApi = await getInfoApi();
-	const infoDb = await getInfoDb();
+	const infoDb = await getInfo();
 	const allGames = infoApi.concat(infoDb);
 	return allGames;
 };
 
-const genresDb = async () => {
+const genresApi = async () => {
 	try {
-		const infoApi = await axios.get(`https://api.rawg.io/api/genres?key=${API_KEY}`, {
-			headers: {
-				'accept-encoding': '*',
-			},
-		});
-		const genres = infoApi.data.results.map((g) => {
+		const gamesGenresApi = await axios(`https://api.rawg.io/api/genres?key=${API_KEY}`);
+		const genres = gamesGenresApi.data.results.map((g) => {
 			return g.name;
 		});
 
@@ -82,43 +81,30 @@ const genresDb = async () => {
 	}
 };
 
-const postGenre = async (name) => {
-	const genreCreated = await Genre.create(name);
-	return genreCreated;
-};
-
-const postVideoGame = async (objVideoGame) => {
-	console.log(objVideoGame);
+const platformsApi = async () => {
 	try {
-		const { name, description, released, rating, image, platforms, genres } =
-			objVideoGame;
+		const gamesPlatformsApi = await axios(
+			`https://api.rawg.io/api/platforms?key=${API_KEY}`
+		);
+		const platforms = gamesPlatformsApi.data.results.map((g) => g.name);
 
-		const videoGame = {
-			name,
-			description,
-			image,
-			released,
-			rating,
-			platforms,
-		};
-		const videoGameCreated = await Videogame.create(videoGame);
-		genres.map(async (g) => {
-			let genre = await Genre.findAll({
+		platforms.forEach((g) => {
+			Platform.findOrCreate({
 				where: { name: g },
 			});
-			videoGameCreated.addGenre(genre);
 		});
-		return videoGameCreated;
+		const platformsDb = await Platform.findAll();
+
+		return platformsDb;
 	} catch (error) {
-		console.log('error en post/game', error);
+		console.log('error en genresDb', error);
 	}
 };
 
 module.exports = {
 	getInfoApi,
-	getInfoDb,
-	getInfoTotal,
-	genresDb,
-	postVideoGame,
-	postGenre,
+	getInfo,
+	getAllGames,
+	genresApi,
+	platformsApi,
 };
