@@ -38,7 +38,7 @@
 	height: fit-content;
 }
 
-h1 {
+.detailContainer h1 {
 	text-align: right;
 	font-size: xxx-large;
 	padding: 0 3rem;
@@ -50,17 +50,17 @@ h1 {
 	box-shadow: 0 10px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
-h4 {
+.detailContainer h4 {
 	font-size: 22px;
 	text-align: center;
 }
 
-p {
+.detailContainer p {
 	font-size: 15px;
 	line-height: 1.65;
 }
 
-a {
+.detailContainer a {
 	color: #e6e6e6;
 }
 

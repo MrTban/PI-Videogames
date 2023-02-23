@@ -1,36 +1,16 @@
-/* $base-duration: 500ms;
-
-// Colors
-$color-1: #2c3e50;
-$color-2: #1abc9c;
-$color-3: #2ecc71;
-
-// Breakpoints
-$sm: new-breakpoint(min-width 320px);
-$med: new-breakpoint(min-width 768px);
-$lg: new-breakpoint(min-width 1024px); */
-
-.all,
+/* .all,
 .all:before,
 .all:after {
 	box-sizing: border-box;
 	outline: none;
-}
+} */
 
-.html {
-	font-family: 'GT Walsheim Pro';
-	font-size: 16px;
-	font-weight: 300;
-	line-height: 1.5;
-	color: #444;
-}
-
-.body {
+/* .body {
 	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-}
+} */
 
 figure {
 	position: relative;
@@ -39,9 +19,9 @@ figure {
 	justify-content: center;
 	width: 275px;
 	min-width: 300px;
-	height: 500px;
+	height: 300px;
 	border-radius: 10px;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+	box-shadow: 0 5px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 	transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 	overflow: hidden;
 }
@@ -65,11 +45,11 @@ figure img {
 
 figure figcaption {
 	position: absolute;
-	bottom: -60%;
+	bottom: -70%;
 	left: 0;
 	width: 100%;
 	margin: 0;
-	padding: 30px;
+	padding: 1rem;
 	background-color: #1a1a1a;
 	box-shadow: 0 0 20px rgba(black, 0.4);
 	color: #e6e6e6;

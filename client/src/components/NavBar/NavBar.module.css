@@ -1,9 +1,8 @@
 .buttonsNav {
 	display: flex;
 	flex-direction: row;
-	align-items: end;
+	align-items: flex-end;
 	justify-content: center;
-	margin-left: 3%;
 }
 
 .buttonLink {
@@ -12,7 +11,6 @@
 	border-radius: 12px;
 	border: 0;
 	box-sizing: border-box;
-	width: fit-content;
 	padding: 0 15px;
 	height: 30px;
 	margin-left: 1rem;
