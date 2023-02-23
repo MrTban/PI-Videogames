@@ -17,57 +17,95 @@ const Detail = () => {
 	}, [dispatch, id]);
 
 	return (
-		<div className={style.detailContainer}>
-			<h1>Detail</h1>
+		<div>
 			<Link to='/home'>
-				<button>Back to Home</button>
+				<button className={style.buttoncito}>Back to Home</button>
 			</Link>
 			{Object.entries(gameDetail).length ? (
-				<div>
+				<div className={style.detailContainer}>
 					<div>
-						<div>
-							<h1>{gameDetail.name}</h1>
+						<h1>
+							<i>{gameDetail.name}</i>
+						</h1>
+					</div>
+					<div className={style.content}>
+						<div className={style.imgContainer}>
+							<img
+								src={gameDetail.image}
+								alt={gameDetail.name}
+								className={style.imgDetail}
+							/>
 						</div>
-						<div>
-							<img src={gameDetail.image} alt={gameDetail.name} />
+						<div className={style.data}>
+							<div className={style.descriptionContainer}>
+								<h4>
+									<i>Description:</i>
+								</h4>
+								<p>{gameDetail.description}</p>
+							</div>
+							<div className={style.rrDiv}>
+								<h4>
+									<i>Rating:</i>
+									<p>{gameDetail.rating} &#9733;</p>
+								</h4>
+								<h4>
+									<i>Released:</i>
+									<p>{gameDetail.released}</p>
+								</h4>
+							</div>
 						</div>
-						<div className={style.descriptionContainer}>
-							<h4>Description:</h4>
-							<p>{gameDetail.description}</p>
+
+						<div className={style.divPlatGen}>
+							<div className={style.divPlat}>
+								<h4>
+									<i>Platforms:</i>
+									<p>
+										{gameDetail.platforms && typeof gameDetail.platforms[0] === 'object'
+											? gameDetail.platforms?.map((p) => p.name + ', ')
+											: gameDetail.platforms?.join(', ')}
+									</p>
+								</h4>
+							</div>
+							<div className={style.divGen}>
+								<h4>
+									<i>Genres:</i>
+									<p>
+										{gameDetail.genres && typeof gameDetail.genres[0] === 'object'
+											? gameDetail.genres?.map((g) => g.name + ', ')
+											: gameDetail.genres?.join(', ')}
+									</p>
+								</h4>
+							</div>
 						</div>
-						<div>
-							<h4>Rating:</h4>
-							<p>{gameDetail.rating} &#9733;</p>
-							<h4>Released:</h4>
-							<p>{gameDetail.released}</p>
-						</div>
-						<div>
-							<h4>Publishers:</h4>
-							<p>{gameDetail.publishers}</p>
-							<h4>Website:</h4>
-							<a href={gameDetail.website}>{gameDetail.website}</a>
-						</div>
-						<div>
-							<h4>Platforms:</h4>
-							<p>
-								{gameDetail.platforms && typeof gameDetail.platforms[0] === 'object'
-									? gameDetail.platforms?.map((p) => p.name + ', ')
-									: gameDetail.platforms?.join(', ')}
-							</p>
-							<h4>Genres:</h4>
-							<p>
-								{gameDetail.genres && typeof gameDetail.genres[0] === 'object'
-									? gameDetail.genres?.map((g) => g.name + ', ')
-									: gameDetail.genres?.join(', ')}
-							</p>
-							<h4>Stores:</h4>
-							<p>
-								{gameDetail.stores && typeof gameDetail.stores[0] === 'object'
-									? gameDetail.stores?.map((s) => s.name + ', ')
-									: gameDetail.stores?.join(', ')}
-							</p>
-							<h4>Tags:</h4>
-							<p>{gameDetail.tags.join(', ')}</p>
+
+						<div className={style.infoAdded}>
+							<div>
+								<h4>
+									<i>Publishers:</i>
+									<p>{gameDetail.publishers}</p>
+								</h4>
+								<h4>
+									<i>Website:</i>
+									<p>
+										<a href={gameDetail.website}>{gameDetail.website}</a>
+									</p>
+								</h4>
+							</div>
+							<div>
+								<h4>
+									<i>Stores:</i>
+									<p>
+										{gameDetail.stores && typeof gameDetail.stores[0] === 'object'
+											? gameDetail.stores?.map((s) => s.name + ', ')
+											: gameDetail.stores?.join(', ')}
+									</p>
+								</h4>
+							</div>
+
+							<h4>
+								<i>Tags:</i>
+								<p>{gameDetail.tags.join(', ')}</p>
+							</h4>
 						</div>
 					</div>
 				</div>

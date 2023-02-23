@@ -1,20 +1,106 @@
+.buttoncito {
+	background-color: #1abc9c;
+	color: #1a1a1a;
+	border-radius: 12px;
+	border: 0;
+	box-sizing: border-box;
+	width: fit-content;
+	padding: 0 25px;
+	height: 40px;
+	outline: 0;
+	font-family: 'GT Walsheim Pro';
+	font-size: 20px;
+	box-shadow: inset 0 0 6px #0f1011;
+	cursor: pointer;
+	position: absolute;
+	margin: 5rem 2.2rem;
+}
+
+.buttoncito:hover {
+	background: #28e2bc;
+}
+
 .detailContainer {
 	font-family: 'GT Walsheim Pro';
 	cursor: default;
-	color: #fff;
+	color: #e6e6e6;
+	padding: 2.2rem;
+}
+
+.content {
+	grid-gap: clamp(15px, 2.5vw, 25px);
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.imgContainer {
+	width: 60%;
+	height: fit-content;
+}
+
+h1 {
+	text-align: right;
+	font-size: xxx-large;
+	padding: 0 3rem;
+}
+
+.imgDetail {
+	max-width: 100%;
+	border-radius: 20px;
+	box-shadow: 0 10px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 h4 {
-	color: #fff;
-	font-size: 20px;
+	font-size: 22px;
+	text-align: center;
 }
 
 p {
-	color: #ccc;
 	font-size: 15px;
 	line-height: 1.65;
 }
 
+a {
+	color: #e6e6e6;
+}
+
+.data {
+	max-width: 35%;
+}
+
 .descriptionContainer {
 	background-color: #1a1a1a;
+	padding: 1rem;
+	border-radius: 20px;
+	display: block;
+	max-height: 250px;
+	overflow-y: auto;
+	margin-bottom: 30px;
+}
+
+.rrDiv {
+	display: flex;
+	flex-direction: row;
+	gap: 5rem;
+	justify-content: center;
+}
+
+.divPlatGen {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+}
+
+.divPlat {
+	width: 50%;
+}
+
+.divGen {
+	width: 50%;
+}
+
+.infoAdded {
+	display: flex;
+	flex-direction: row;
+	gap: 5rem;
 }
