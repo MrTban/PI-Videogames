@@ -1,11 +1,13 @@
 const server = require('./src/app.js');
 const { conn } = require('./src/db/db');
 
+const port = process.env.PORT || 3001;
+
 // Syncing all the models at once.
 
-conn.sync({ force: true }).then(async () => {
-	console.log('Data connected');
-	server.listen(3001, () => {
-		console.log('Server in http://localhost:3001');
+conn.sync({ force: false }).then(async () => {
+	// console.log('Data connected');
+	server.listen(port, () => {
+		console.log(`Server raised in port: ${port}`);
 	});
 });
