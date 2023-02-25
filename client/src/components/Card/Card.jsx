@@ -25,6 +25,7 @@ const Card = ({ id, name, image, genres, rating }) => {
 						</i>
 					</h3>
 					{/* <h4>
+					 tryparce uuid de la db
 								{genres && (
 									<i>
 										<p>{genres.map((g) => Object.values(g))}</p>
@@ -33,7 +34,7 @@ const Card = ({ id, name, image, genres, rating }) => {
 							</h4> */}
 					<Link to={`/detail/${id}`} className={style.linkbutton}>
 						<button>
-							<i>Details</i>
+							<i>More Info</i>
 						</button>
 					</Link>
 				</figcaption>

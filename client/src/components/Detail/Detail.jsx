@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { getDetail } from '../../redux/actions';
 import Loading from '../Loader/Loader';
 import style from './Detail.module.css';
+import defaultImg from '../../assets/imagen.jpg';
 
 const Detail = () => {
 	const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const Detail = () => {
 					<div className={style.content}>
 						<div className={style.imgContainer}>
 							<img
-								src={gameDetail.image}
+								src={gameDetail.image ? gameDetail.image : defaultImg}
 								alt={gameDetail.name}
 								className={style.imgDetail}
 							/>
@@ -60,7 +61,7 @@ const Detail = () => {
 								<h4>
 									<i>Platforms:</i>
 									<p>
-										{gameDetail.platforms && typeof gameDetail.platforms[0] === 'object'
+										{gameDetail?.platforms && typeof gameDetail.platforms[0] === 'object'
 											? gameDetail.platforms?.map((p) => p.name + ', ')
 											: gameDetail.platforms?.join(', ')}
 									</p>
@@ -70,7 +71,7 @@ const Detail = () => {
 								<h4>
 									<i>Genres:</i>
 									<p>
-										{gameDetail.genres && typeof gameDetail.genres[0] === 'object'
+										{gameDetail?.genres && typeof gameDetail.genres[0] === 'object'
 											? gameDetail.genres?.map((g) => g.name + ', ')
 											: gameDetail.genres?.join(', ')}
 									</p>
@@ -104,7 +105,7 @@ const Detail = () => {
 
 							<h4>
 								<i>Tags:</i>
-								<p>{gameDetail.tags.join(', ')}</p>
+								<p>{gameDetail.tags?.join(', ')}</p>
 							</h4>
 						</div>
 					</div>

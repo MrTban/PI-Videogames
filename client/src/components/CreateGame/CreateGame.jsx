@@ -28,15 +28,7 @@ const GameCreate = () => {
 		genres: [],
 	});
 
-	const [errors, setErrors] = useState({
-		// name: '',
-		// description: '',
-		// released: '',
-		// rating: '',
-		// image: '',
-		// platforms: [],
-		// genres: [],
-	});
+	const [errors, setErrors] = useState({});
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -46,7 +38,7 @@ const GameCreate = () => {
 			alert('Missing Info');
 		} else {
 			dispatch(postVideogames(input));
-			alert('The Video Game was created');
+			alert('¡The Video Game was created!');
 			setInput({
 				name: '',
 				description: '',

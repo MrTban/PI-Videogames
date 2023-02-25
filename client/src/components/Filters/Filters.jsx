@@ -50,7 +50,7 @@ const FilterSelects = ({
 					))}
 				</select>
 				<select onChange={(e) => handleFilterPlatfomrs(e)} className={style.selects}>
-					<option value='' select disable>
+					<option value='' select disable hidden>
 						Platforms
 					</option>
 					<option value='all'>All</option>
