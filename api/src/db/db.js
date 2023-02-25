@@ -12,10 +12,10 @@ const sequelize = new Sequelize(
 	}
 );
 
-// const sequelize = new Sequelize(DB_DEPLOY, {
-// 	logging: false, // set to console.log to see the raw SQL queries
-// 	native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-// });
+// // const sequelize = new Sequelize(DB_DEPLOY, {
+// // 	logging: false, // set to console.log to see the raw SQL queries
+// // 	native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+// // });
 
 const basename = path.basename(__filename);
 
@@ -46,11 +46,19 @@ const { Videogame, Genre, Platform } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
-Videogame.belongsToMany(Genre, { through: 'videogames_genre' });
-Genre.belongsToMany(Videogame, { through: 'videogames_genre' });
+Videogame.belongsToMany(Genre, { through: 'videogames_genre' }, { timestamps: false });
+Genre.belongsToMany(Videogame, { through: 'videogames_genre' }, { timestamps: false });
 
-Videogame.belongsToMany(Platform, { through: 'videogames_platform' });
-Platform.belongsToMany(Videogame, { through: 'videogames_platform' });
+Videogame.belongsToMany(
+	Platform,
+	{ through: 'videogames_platform' },
+	{ timestamps: false }
+);
+Platform.belongsToMany(
+	Videogame,
+	{ through: 'videogames_platform' },
+	{ timestamps: false }
+);
 
 module.exports = {
 	...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

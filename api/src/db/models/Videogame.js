@@ -35,7 +35,7 @@ module.exports = (sequelize) => {
 			image: {
 				type: DataTypes.STRING,
 				defaultValue:
-					'https://static.displate.com/857x1200/displate/2021-11-23/a9c80ae5589aebc94387f63326f7d2d1_22bf647282ff5f2cacdf9bedcebe64d5.jpg',
+					'https://i.pinimg.com/564x/17/93/7c/17937c5624135c85cae6f10f58e2f496.jpg',
 			},
 			createdInDb: {
 				type: DataTypes.BOOLEAN,

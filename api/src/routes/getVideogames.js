@@ -29,16 +29,27 @@ router.get('/:id', async (req, res) => {
 	try {
 		const { id } = req.params;
 		if (isNaN(id)) {
-			const game = await Videogame.findByPk(id, { include: Genre });
+			const game = await Videogame.findByPk(id, {
+				include: {
+					model: Platform,
+					// attributes: ['name'],
+					through: {
+						attributes: [],
+					},
+				},
+				include: {
+					model: Genre,
+					// attributes: ['name'],
+					through: {
+						attributes: [],
+					},
+				},
+			});
+
 			res.status(200).json(game);
 		} else {
 			const response = await axios.get(
-				`https://api.rawg.io/api/games/${id}?key=${API_KEY}`,
-				{
-					headers: {
-						'accept-encoding': '*',
-					},
-				}
+				`https://api.rawg.io/api/games/${id}?key=${API_KEY}`
 			);
 			const result = {
 				id: response.data.id,

@@ -86,11 +86,11 @@ const platformsApi = async () => {
 		const gamesPlatformsApi = await axios(
 			`https://api.rawg.io/api/platforms?key=${API_KEY}`
 		);
-		const platforms = gamesPlatformsApi.data.results.map((g) => g.name);
+		const platforms = gamesPlatformsApi.data.results.map((p) => p.name);
 
-		platforms.forEach((g) => {
+		platforms.forEach((p) => {
 			Platform.findOrCreate({
-				where: { name: g },
+				where: { name: p },
 			});
 		});
 		const platformsDb = await Platform.findAll();
