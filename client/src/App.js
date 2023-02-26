@@ -7,7 +7,7 @@ import CreateGame from './components/CreateGame/CreateGame';
 import About from './components/About/About';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:3001/';
+axios.defaults.baseURL = 'https://pi-videogames-production-c478.up.railway.app/';
 
 function App() {
 	return (
