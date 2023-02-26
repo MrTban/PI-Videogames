@@ -75,15 +75,16 @@ const Home = () => {
 	}
 
 	useEffect(() => {
-		dispatch(getVideogames());
-		setTimeout(() => {
-			setIsLoaded(true);
-		}, [5000]);
+		dispatch(getVideogames()).then(() => setIsLoaded(false));
 	}, [dispatch]);
+
+	if (isLoaded) {
+		return <Loading />;
+	}
 
 	return (
 		<div className={style.bodyHome}>
-			{isLoaded ? (
+			{allVideogames.length ? (
 				<div>
 					<div className={style.logo}>
 						{/* <h1 className={style.homeTitle}>
