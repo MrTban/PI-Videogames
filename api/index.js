@@ -1,13 +1,13 @@
 const server = require('./src/app.js');
 const { conn } = require('./src/db/db');
-
-const port = process.env.PORT || 3001;
+require('dotenv').config();
+const { PORT } = process.env;
 
 // Syncing all the models at once.
 
 conn.sync({ force: false }).then(async () => {
 	// console.log('Data connected');
-	server.listen(port, () => {
-		console.log(`Server raised in port: ${port}`);
+	server.listen(PORT, () => {
+		console.log('%s listening at', PORT);
 	});
 });
