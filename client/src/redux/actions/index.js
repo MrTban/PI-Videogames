@@ -16,7 +16,7 @@ import {
 
 export const getVideogames = () => async (dispatch) => {
 	try {
-		const response = await axios.get('http://localhost:3001/videogames');
+		const response = await axios.get('/videogames');
 		return dispatch({
 			type: GET_VIDEOGAMES,
 			payload: response.data,
@@ -29,7 +29,7 @@ export const getVideogames = () => async (dispatch) => {
 export function getVideogamesName(name) {
 	return async function (dispatch) {
 		try {
-			const response = await axios.get(`http://localhost:3001/videogames?name=${name}`);
+			const response = await axios.get(`/videogames?name=${name}`);
 			return dispatch({
 				type: GET_NAME_VIDEOGAMES,
 				payload: response.data,
@@ -42,7 +42,7 @@ export function getVideogamesName(name) {
 
 export function getGenres() {
 	return async function (dispatch) {
-		const response = await axios.get('http://localhost:3001/genres', {});
+		const response = await axios.get('/genres', {});
 
 		return dispatch({
 			type: GET_GENRES,
@@ -53,7 +53,7 @@ export function getGenres() {
 
 export function getPlatforms() {
 	return async function (dispatch) {
-		const response = await axios.get('http://localhost:3001/platforms', {});
+		const response = await axios.get('/platforms', {});
 
 		return dispatch({
 			type: GET_PLATFORMS,
@@ -64,7 +64,7 @@ export function getPlatforms() {
 
 export const postVideogames = (game) => async () => {
 	try {
-		const data = await axios.post('http://localhost:3001/videogames', game);
+		const data = await axios.post('/videogames', game);
 		return data;
 	} catch (error) {
 		return error;
@@ -111,7 +111,7 @@ export function sortByName(payload) {
 export function getDetail(id) {
 	return async function (dispatch) {
 		try {
-			var json = await axios.get(`http://localhost:3001/videogames/${id}`);
+			var json = await axios.get(`/videogames/${id}`);
 
 			return dispatch({
 				type: GET_DETAIL,

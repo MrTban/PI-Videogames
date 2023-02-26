@@ -21,7 +21,7 @@ import logo from '../../assets/tbanrawg.png';
 const Home = () => {
 	const dispatch = useDispatch();
 
-	const [carga, SetCarga] = useState(true);
+	const [isLoaded, setIsLoaded] = useState(false);
 
 	const allVideogames = useSelector((state) => state.videogames);
 	const [, /* order */ setOrden] = useState('');
@@ -75,16 +75,15 @@ const Home = () => {
 	}
 
 	useEffect(() => {
-		dispatch(getVideogames()).then(() => SetCarga(false));
+		dispatch(getVideogames());
+		setTimeout(() => {
+			setIsLoaded(true);
+		}, [5000]);
 	}, [dispatch]);
-
-	if (carga) {
-		return <Loading />;
-	}
 
 	return (
 		<div className={style.bodyHome}>
-			{allVideogames.length ? (
+			{isLoaded ? (
 				<div>
 					<div className={style.logo}>
 						{/* <h1 className={style.homeTitle}>
