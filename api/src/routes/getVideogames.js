@@ -30,20 +30,22 @@ router.get('/:id', async (req, res) => {
 		const { id } = req.params;
 		if (isNaN(id)) {
 			const game = await Videogame.findByPk(id, {
-				include: {
-					model: Platform,
-					// attributes: ['name'],
-					through: {
-						attributes: [],
+				include: [
+					{
+						model: Genre,
+						attributes: ['name'],
+						through: {
+							attributes: [],
+						},
 					},
-				},
-				include: {
-					model: Genre,
-					// attributes: ['name'],
-					through: {
-						attributes: [],
+					{
+						model: Platform,
+						attributes: ['name'],
+						through: {
+							attributes: [],
+						},
 					},
-				},
+				],
 			});
 
 			res.status(200).json(game);
