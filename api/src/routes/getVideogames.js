@@ -112,7 +112,7 @@ router.delete('/:id', async (req, res) => {
 	try {
 		const { id } = req.params;
 
-		if (id) {
+		if (isNaN(id)) {
 			const game = await Videogame.findByPk(id);
 
 			if (game) {
