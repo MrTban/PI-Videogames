@@ -30,7 +30,7 @@ const getInfoApi = async () => {
 		}
 		return allGames;
 	} catch (error) {
-		return { error: error.message };
+		throw new Error(error);
 	}
 };
 
@@ -77,7 +77,7 @@ const genresApi = async () => {
 		const genresDb = await Genre.findAll();
 		return genresDb;
 	} catch (error) {
-		return { error: error.message };
+		throw new Error(error);
 	}
 };
 
@@ -97,21 +97,17 @@ const platformsApi = async () => {
 
 		return platformsDb;
 	} catch (error) {
-		return { error: error.message };
+		throw new Error(error);
 	}
 };
 
 const deleteGameById = async (id) => {
 	try {
-		const gameFinded = await Videogame.findByPk(id);
+		const deletedGame = await Videogame.destroy({ where: { id: id } });
 
-		if (!gameFinded) throw new Error('No game found with this id');
-
-		gameFinded.destroy();
-
-		return 'Game successfully deleted';
+		return deletedGame;
 	} catch (error) {
-		return { error: error.message };
+		throw new Error(error);
 	}
 };
 

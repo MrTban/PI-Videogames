@@ -111,11 +111,19 @@ router.post('/', async (req, res) => {
 router.delete('/:id', async (req, res) => {
 	try {
 		const { id } = req.params;
-		const deleteGame = await deleteGameById(parseInt(id));
 
-		if (deleteGame.error) throw new Error(deleteGame.error);
+		if (id) {
+			const game = await Videogame.findByPk(id);
 
-		return res.status(201).send(deleteGame);
+			if (game) {
+				const deleteGame = await deleteGameById(id);
+				res.status(201).json({ success: true, data_deleted: deleteGame });
+			} else {
+				throw new Error(`The game with id: ${id} does not exist`);
+			}
+		} else {
+			throw new Error('Uncompleted data');
+		}
 	} catch (error) {
 		return res.status(500).send({ error: error.message });
 	}
