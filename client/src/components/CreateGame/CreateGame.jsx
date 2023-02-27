@@ -288,11 +288,7 @@ const GameCreate = () => {
 					</ul>
 				</div>
 
-				<button
-					type='submit'
-					className={style.submit}
-					disabled={Object.values(errors).length > 0}
-				>
+				<button type='submit' className={style.submit}>
 					<i>Create</i>
 				</button>
 				{/* {Object.keys(errors).length === 0 ? (
