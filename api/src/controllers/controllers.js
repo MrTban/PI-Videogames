@@ -30,7 +30,7 @@ const getInfoApi = async () => {
 		}
 		return allGames;
 	} catch (error) {
-		console.log('error');
+		return { error: error.message };
 	}
 };
 
@@ -77,7 +77,7 @@ const genresApi = async () => {
 		const genresDb = await Genre.findAll();
 		return genresDb;
 	} catch (error) {
-		console.log('error en genresDb', error);
+		return { error: error.message };
 	}
 };
 
@@ -97,7 +97,21 @@ const platformsApi = async () => {
 
 		return platformsDb;
 	} catch (error) {
-		console.log('error en genresDb', error);
+		return { error: error.message };
+	}
+};
+
+const deleteGameById = async (id) => {
+	try {
+		const gameFinded = await Videogame.findByPk(id);
+
+		if (!gameFinded) throw new Error('No game found with this id');
+
+		gameFinded.destroy();
+
+		return 'Game successfully deleted';
+	} catch (error) {
+		return { error: error.message };
 	}
 };
 
@@ -107,4 +121,5 @@ module.exports = {
 	getAllGames,
 	genresApi,
 	platformsApi,
+	deleteGameById,
 };

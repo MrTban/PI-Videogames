@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const axios = require('axios');
-const { getAllGames /*  postVideoGame  */ } = require('../controllers/controllers');
+const { getAllGames, deleteGameById } = require('../controllers/controllers');
 const { Videogame, Genre, Platform } = require('../db/db');
 const { API_KEY } = process.env;
 
@@ -75,6 +75,10 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
 	try {
 		const { name, description, released, rating, image, platforms, genres } = req.body;
+
+		if (!name || !description || !released || !rating || !platforms || !genres)
+			throw new Error('Mandatory data missing');
+
 		const newGame = await Videogame.create({
 			name,
 			description,
@@ -82,10 +86,10 @@ router.post('/', async (req, res) => {
 			rating,
 			image,
 		});
-		platforms.map(async (g) => {
+		platforms.map(async (p) => {
 			const [platformDB, created] = await Platform.findOrCreate({
 				where: {
-					name: g,
+					name: p,
 				},
 			});
 			await newGame.addPlatform(platformDB);
@@ -101,6 +105,19 @@ router.post('/', async (req, res) => {
 		res.status(201).json({ ...newGame.dataValues, platforms: platforms, genres: genres });
 	} catch (error) {
 		res.status(500).send({ error: error.message });
+	}
+});
+
+router.delete('/:id', async (req, res) => {
+	try {
+		const { id } = req.params;
+		const deleteGame = await deleteGameById(parseInt(id));
+
+		if (deleteGame.error) throw new Error(deleteGame.error);
+
+		return res.status(201).send(deleteGame);
+	} catch (error) {
+		return res.status(500).send({ error: error.message });
 	}
 });
 
