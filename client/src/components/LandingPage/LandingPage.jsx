@@ -18,14 +18,10 @@ const LandingPage = () => {
 						<div className={style.centerRight}></div>
 					</div>
 					<button className={style.centerSelect}>
-						<button className={style.SLeft}></button>
-						<button className={style.SRight}></button>
 						<label className={style.labelSelect}>SELECT</label>
 					</button>
 					<Link to='/home' className={style.link}>
 						<button className={style.centerStart}>
-							<button className={style.SLeft}></button>
-							<button className={style.SRight}></button>
 							<label className={style.labelStart}>START</label>
 						</button>
 					</Link>
