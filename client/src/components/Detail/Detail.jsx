@@ -76,8 +76,8 @@ const Detail = () => {
 											: gameDetail.genres?.join(', ')}
 									</p> */}
 
-									{gameDetail?.genres.map((g) => (
-										<p key={g.name ?? g}>{g.name ?? g}</p>
+									{gameDetail?.genres?.map((g) => (
+										<p key={g?.name ?? g}>{g?.name ?? g}</p>
 									))}
 								</h4>
 							</div>
