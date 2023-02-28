@@ -13,7 +13,6 @@ import NavBar from '../NavBar/NavBar';
 import Card from '../Card/Card';
 import Paged from '../Paged/Paged';
 import Loading from '../Loader/Loader';
-// import FilterSelects from '../Filters/Filters';
 import style from './Home.module.css';
 import defaultImage from '../../assets/imagen.jpg';
 import logo from '../../assets/tbanrawg.png';
@@ -87,9 +86,6 @@ const Home = () => {
 			{allVideogames.length ? (
 				<div>
 					<div className={style.logo}>
-						{/* <h1 className={style.homeTitle}>
-							<i> TBAN GAMES </i>
-						</h1> */}
 						<img src={logo} alt='tbanlogo' />
 					</div>
 
@@ -107,11 +103,6 @@ const Home = () => {
 					<br />
 					<br />
 					<div>
-						{/* <Paged
-							videogamesPerPage={videogamesPerPage}
-							allVideogames={allVideogames.length}
-							paged={paged}
-						/> */}
 						<br />
 						<div className={style.allVideogamesContainer}>
 							{currentVideogames.map((e) => (

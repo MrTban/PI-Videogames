@@ -70,20 +70,11 @@ const Detail = () => {
 							<div className={style.divGen}>
 								<h4>
 									<i>Genres:</i>
-									{/* <p>
+									<p>
 										{gameDetail?.genres && typeof gameDetail.genres[0] === 'object'
 											? gameDetail.genres?.map((g) => g.name + ', ')
 											: gameDetail.genres?.join(', ')}
-									</p> */}
-									<p>
-										{gameDetail?.createdInDb === true
-											? gameDetail?.genres?.map((g) => g.name + ', ')
-											: gameDetail?.genres + ', '}
 									</p>
-
-									{/* {gameDetail?.genres?.map((g) => (
-										<p key={g?.name ?? g}>{g?.name ?? g}</p>
-									))} */}
 								</h4>
 							</div>
 						</div>

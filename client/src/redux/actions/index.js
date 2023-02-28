@@ -26,41 +26,35 @@ export const getVideogames = () => async (dispatch) => {
 	}
 };
 
-export function getVideogamesName(name) {
-	return async function (dispatch) {
-		try {
-			const response = await axios.get(`/videogames?name=${name}`);
-			return dispatch({
-				type: GET_NAME_VIDEOGAMES,
-				payload: response.data,
-			});
-		} catch (error) {
-			console.log(error);
-		}
-	};
-}
-
-export function getGenres() {
-	return async function (dispatch) {
-		const response = await axios.get('/genres', {});
-
+export const getVideogamesName = (name) => async (dispatch) => {
+	try {
+		const response = await axios.get(`/videogames?name=${name}`);
 		return dispatch({
-			type: GET_GENRES,
+			type: GET_NAME_VIDEOGAMES,
 			payload: response.data,
 		});
-	};
-}
+	} catch (error) {
+		console.log(error);
+	}
+};
 
-export function getPlatforms() {
-	return async function (dispatch) {
-		const response = await axios.get('/platforms', {});
+export const getGenres = () => async (dispatch) => {
+	const response = await axios.get('/genres', {});
 
-		return dispatch({
-			type: GET_PLATFORMS,
-			payload: response.data,
-		});
-	};
-}
+	return dispatch({
+		type: GET_GENRES,
+		payload: response.data,
+	});
+};
+
+export const getPlatforms = () => async (dispatch) => {
+	const response = await axios.get('/platforms', {});
+
+	return dispatch({
+		type: GET_PLATFORMS,
+		payload: response.data,
+	});
+};
 
 export const postVideogames = (game) => async () => {
 	try {
@@ -71,26 +65,26 @@ export const postVideogames = (game) => async () => {
 	}
 };
 
-export function filterVideogamesByGenres(payload) {
+export const filterVideogamesByGenres = (payload) => {
 	return {
 		type: FILTER_BY_GENRES,
 		payload: payload,
 	};
-}
+};
 
-export function filterVideogamesByPlatforms(payload) {
+export const filterVideogamesByPlatforms = (payload) => {
 	return {
 		type: FILTER_BY_PLATFORMS,
 		payload: payload,
 	};
-}
+};
 
-export function filterCreated(payload) {
+export const filterCreated = (payload) => {
 	return {
 		type: FILTER_CREATED,
 		payload,
 	};
-}
+};
 
 export const sortByRating = (payload) => {
 	return function (dispatch) {
@@ -101,27 +95,25 @@ export const sortByRating = (payload) => {
 	};
 };
 
-export function sortByName(payload) {
+export const sortByName = (payload) => {
 	return {
 		type: ORDER_BY_NAME,
 		payload,
 	};
-}
+};
 
-export function getDetail(id) {
-	return async function (dispatch) {
-		try {
-			var json = await axios.get(`/videogames/${id}`);
+export const getDetail = (id) => async (dispatch) => {
+	try {
+		let json = await axios.get(`/videogames/${id}`);
 
-			return dispatch({
-				type: GET_DETAIL,
-				payload: json.data,
-			});
-		} catch (error) {
-			console.log(error);
-		}
-	};
-}
+		return dispatch({
+			type: GET_DETAIL,
+			payload: json.data,
+		});
+	} catch (error) {
+		console.log(error);
+	}
+};
 
 export const reset = () => {
 	return {

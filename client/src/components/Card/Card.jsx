@@ -24,14 +24,6 @@ const Card = ({ id, name, image, genres, rating }) => {
 								: genres?.join(', ')}
 						</i>
 					</h3>
-					{/* <h4>
-					 tryparce uuid de la db
-								{genres && (
-									<i>
-										<p>{genres.map((g) => Object.values(g))}</p>
-									</i>
-								)}
-							</h4> */}
 					<Link to={`/detail/${id}`} className={style.linkbutton}>
 						<button>
 							<i>More Info</i>

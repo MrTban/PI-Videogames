@@ -162,7 +162,6 @@ const GameCreate = () => {
 					</label>
 				</div>
 				<div className={`${style.input_container} ${style.ic2}`}>
-					{/* <label>Released Date: </label> */}
 					<input
 						id='input'
 						type='date'
@@ -177,7 +176,6 @@ const GameCreate = () => {
 					</label>
 				</div>
 				<div className={`${style.input_container} ${style.ic2}`}>
-					{/* <label>Rating: </label> */}
 					<input
 						id='input'
 						type='number'
@@ -264,9 +262,6 @@ const GameCreate = () => {
 						{input.genres.map((a) => (
 							<li className={style.liS}>
 								<p onClick={() => handleDeleteGenres(a)}>{a}</p>
-								{/* <button type='button' value={a}>
-								x
-							</button> */}
 							</li>
 						))}
 					</ul>
@@ -280,9 +275,6 @@ const GameCreate = () => {
 						{input.platforms.map((e) => (
 							<li className={style.liS}>
 								<p onClick={() => handleDeletePlatforms(e)}>{e}</p>
-								{/* <button type='button' value={e} onClick={() => handleDeletePlatforms(e)}>
-									x
-								</button> */}
 							</li>
 						))}
 					</ul>
@@ -291,11 +283,6 @@ const GameCreate = () => {
 				<button type='submit' className={style.submit}>
 					<i>Create</i>
 				</button>
-				{/* {Object.keys(errors).length === 0 ? (
-					<button type='submit' className={style.submit}>
-						<span>Create</span>
-					</button>
-				) : null} */}
 			</form>
 		</div>
 	);
