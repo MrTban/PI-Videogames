@@ -79,35 +79,40 @@ const Detail = () => {
 							</div>
 						</div>
 
-						<div className={style.infoAdded}>
-							<div>
-								<h4>
-									<i>Publishers:</i>
-									<p>{gameDetail.publishers}</p>
-								</h4>
-								<h4>
-									<i>Website:</i>
-									<p>
-										<a href={gameDetail.website}>{gameDetail.website}</a>
-									</p>
-								</h4>
-							</div>
-							<div>
-								<h4>
-									<i>Stores:</i>
-									<p>
-										{gameDetail.stores && typeof gameDetail.stores[0] === 'object'
-											? gameDetail.stores?.map((s) => s.name + ', ')
-											: gameDetail.stores?.join(', ')}
-									</p>
-								</h4>
-							</div>
+						{gameDetail.publishers &&
+						gameDetail.website &&
+						gameDetail.stores &&
+						gameDetail.tags ? (
+							<div className={style.infoAdded}>
+								<div>
+									<h4>
+										<i>Publishers:</i>
+										<p>{gameDetail.publishers}</p>
+									</h4>
+									<h4>
+										<i>Website:</i>
+										<p>
+											<a href={gameDetail.website}>{gameDetail.website}</a>
+										</p>
+									</h4>
+								</div>
+								<div>
+									<h4>
+										<i>Stores:</i>
+										<p>
+											{gameDetail.stores && typeof gameDetail.stores[0] === 'object'
+												? gameDetail.stores?.map((s) => s.name + ', ')
+												: gameDetail.stores?.join(', ')}
+										</p>
+									</h4>
+								</div>
 
-							<h4>
-								<i>Tags:</i>
-								<p>{gameDetail.tags?.join(', ')}</p>
-							</h4>
-						</div>
+								<h4>
+									<i>Tags:</i>
+									<p>{gameDetail.tags?.join(', ')}</p>
+								</h4>
+							</div>
+						) : null}
 					</div>
 				</div>
 			) : (
