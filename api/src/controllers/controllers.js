@@ -34,30 +34,29 @@ const getInfoApi = async () => {
 	}
 };
 
-const getInfo = async () => {
-	const infoDb = await Videogame.findAll({
-		include: {
-			model: Genre,
-			attributes: ['name'],
-			through: {
-				attributes: [],
-			},
-		},
-		include: {
-			model: Platform,
-			attributes: ['name'],
-			through: {
-				attributes: [],
-			},
-		},
+const getDbInfo = async () => {
+	const instance = await Videogame.findAll({ include: { all: true, nested: true } });
+	const data = JSON.parse(JSON.stringify(instance));
+	if (data === null) {
+		return [];
+	}
+	const games = data.map((dbGames) => {
+		const game = {
+			...dbGames,
+			genres: dbGames.Genres.map((g) => g.name),
+			platforms: dbGames.Platforms.map((p) => p.name),
+		};
+		delete dbGames.Genre;
+		delete dbGames.Platform;
+		return game;
 	});
 
-	return infoDb;
+	return games;
 };
 
 const getAllGames = async () => {
 	const infoApi = await getInfoApi();
-	const infoDb = await getInfo();
+	const infoDb = await getDbInfo();
 	const allGames = infoApi.concat(infoDb);
 	return allGames;
 };
@@ -113,7 +112,7 @@ const deleteGameById = async (id) => {
 
 module.exports = {
 	getInfoApi,
-	getInfo,
+	getDbInfo,
 	getAllGames,
 	genresApi,
 	platformsApi,
