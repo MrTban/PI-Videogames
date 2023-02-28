@@ -71,9 +71,9 @@ const Detail = () => {
 								<h4>
 									<i>Genres:</i>
 									<p>
-										{gameDetail?.genres && typeof gameDetail.genres[0] === 'object'
-											? gameDetail.genres?.map((g) => g.name + ', ')
-											: gameDetail.genres?.join(', ')}
+										{gameDetail?.genres && typeof gameDetail?.genres[0] === 'object'
+											? gameDetail?.genres?.map((g) => g.name + ', ')
+											: gameDetail?.genres?.join(', ')}
 									</p>
 								</h4>
 							</div>
