@@ -280,9 +280,11 @@ const GameCreate = () => {
 					</ul>
 				</div>
 
-				<button type='submit' className={style.submit}>
-					<i>Create</i>
-				</button>
+				{!errors.name && !errors.description && !errors.released && !errors.rating && (
+					<button type='submit' className={style.submit}>
+						<i>Create</i>
+					</button>
+				)}
 			</form>
 		</div>
 	);
