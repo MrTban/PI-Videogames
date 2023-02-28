@@ -77,7 +77,7 @@ const Detail = () => {
 									</p> */}
 									<p>
 										{gameDetail?.createdInDb === true
-											? gameDetail?.genres.map((g) => g.name + ', ')
+											? gameDetail?.genres?.map((g) => g.name + ', ')
 											: gameDetail?.genres + ', '}
 									</p>
 
