@@ -16,7 +16,7 @@ const NavBar = ({
 	return (
 		<div>
 			<div className={style.buttonsNav}>
-				<SearchBar setCurrentPage={setPage} />
+				<SearchBar setPage={setPage} />
 
 				<div>
 					<Link to='/creategame'>

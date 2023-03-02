@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { getVideogamesName } from '../../redux/actions/index';
 import style from './SearchBar.module.css';
 
-const SearchBar = () => {
+const SearchBar = ({ setPage }) => {
 	const dispatch = useDispatch();
 
 	const [name, setName] = useState('');
@@ -16,6 +16,7 @@ const SearchBar = () => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		dispatch(setPage(1));
 		dispatch(getVideogamesName(name));
 		setName('');
 	};
