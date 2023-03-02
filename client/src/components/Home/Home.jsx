@@ -74,16 +74,15 @@ const Home = () => {
 	}
 
 	useEffect(() => {
-		dispatch(getVideogames()).then(() => setIsLoaded(false));
+		dispatch(getVideogames());
+		setTimeout(() => {
+			setIsLoaded(true);
+		}, [5000]);
 	}, [dispatch]);
-
-	if (isLoaded) {
-		return <Loading />;
-	}
 
 	return (
 		<div className={style.bodyHome}>
-			{allVideogames.length ? (
+			{isLoaded ? (
 				<div>
 					<div className={style.logo}>
 						<img src={logo} alt='tbanlogo' />
@@ -105,16 +104,24 @@ const Home = () => {
 					<div>
 						<br />
 						<div className={style.allVideogamesContainer}>
-							{currentVideogames.map((e) => (
-								<Card
-									key={e.id}
-									id={e.id}
-									name={e.name}
-									image={e.image ? e.image : defaultImage}
-									rating={e.rating}
-									genres={e.genres}
-								/>
-							))}
+							{currentVideogames.length ? (
+								currentVideogames.map((e) => (
+									<Card
+										key={e.id}
+										id={e.id}
+										name={e.name}
+										image={e.image ? e.image : defaultImage}
+										rating={e.rating}
+										genres={e.genres}
+									/>
+								))
+							) : (
+								<div>
+									<h1>
+										<i>There are no video games left</i>
+									</h1>
+								</div>
+							)}
 						</div>
 						<br />
 						<Paged
