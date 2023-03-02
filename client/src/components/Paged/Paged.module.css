@@ -37,3 +37,7 @@
 .paged ul li button:active {
 	background: #037e8c;
 }
+
+.paged ul li .active {
+	background: #037e8c;
+}

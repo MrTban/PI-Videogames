@@ -8,6 +8,7 @@ import {
 	filterCreated,
 	sortByRating,
 	sortByName,
+	setPage,
 } from '../../redux/actions';
 import NavBar from '../NavBar/NavBar';
 import Card from '../Card/Card';
@@ -25,7 +26,7 @@ const Home = () => {
 	const allVideogames = useSelector((state) => state.videogames);
 	const [, /* order */ setOrden] = useState('');
 
-	const [currentPage, setCurrentPage] = useState(1);
+	const currentPage = useSelector((state) => state.paged);
 	const [videogamesPerPage] = useState(15);
 
 	const indexOfLastGame = currentPage * videogamesPerPage;
@@ -33,7 +34,7 @@ const Home = () => {
 	const currentVideogames = allVideogames.slice(indexOfFirstGame, indexOfLastGame);
 
 	const paged = (pageNumber) => {
-		setCurrentPage(pageNumber);
+		dispatch(setPage(pageNumber));
 	};
 
 	function handleResetVg(e) {
@@ -43,14 +44,14 @@ const Home = () => {
 
 	function handleFilterGenres(e) {
 		e.preventDefault();
-		setCurrentPage(1);
+		dispatch(setPage(1));
 		setOrden(e.target.value);
 		dispatch(filterVideogamesByGenres(e.target.value));
 	}
 
 	function handleFilterPlatfomrs(e) {
 		e.preventDefault();
-		setCurrentPage(1);
+		dispatch(setPage(1));
 		setOrden(e.target.value);
 		dispatch(filterVideogamesByPlatforms(e.target.value));
 	}
@@ -61,14 +62,14 @@ const Home = () => {
 
 	function handleSortByRating(e) {
 		e.preventDefault();
-		setCurrentPage(1);
+		dispatch(setPage(1));
 		setOrden(e.target.value);
 		dispatch(sortByRating(e.target.value));
 	}
 
 	function handleSortByName(e) {
 		e.preventDefault();
-		setCurrentPage(1);
+		dispatch(setPage(1));
 		setOrden(e.target.value);
 		dispatch(sortByName(e.target.value));
 	}
@@ -90,7 +91,7 @@ const Home = () => {
 
 					<div className={style.sidebarMenu}>
 						<NavBar
-							setCurrentPage={setCurrentPage}
+							setPage={setPage}
 							handleSortByName={handleSortByName}
 							handleFilterGenres={handleFilterGenres}
 							handleSortByRating={handleSortByRating}
@@ -128,6 +129,7 @@ const Home = () => {
 							videogamesPerPage={videogamesPerPage}
 							allVideogames={allVideogames.length}
 							paged={paged}
+							currentPage={currentPage}
 						/>
 					</div>
 				</div>

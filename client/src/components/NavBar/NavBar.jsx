@@ -5,7 +5,7 @@ import SearchBar from '../SearchBar/SearchBar';
 import style from './NavBar.module.css';
 
 const NavBar = ({
-	setCurrentPage,
+	setPage,
 	handleSortByName,
 	handleFilterGenres,
 	handleSortByRating,
@@ -16,7 +16,7 @@ const NavBar = ({
 	return (
 		<div>
 			<div className={style.buttonsNav}>
-				<SearchBar setCurrentPage={setCurrentPage} />
+				<SearchBar setCurrentPage={setPage} />
 
 				<div>
 					<Link to='/creategame'>

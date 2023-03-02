@@ -11,6 +11,7 @@ import {
 	GET_DETAIL,
 	POST_VIDEOGAME,
 	RESET,
+	SET_PAGE,
 } from '../actions/types';
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
 	genres: [],
 	platforms: [],
 	detail: [],
+	paged: 1,
 };
 
 function rootReducer(state = initialState, action) {
@@ -129,6 +131,12 @@ function rootReducer(state = initialState, action) {
 			return {
 				...state,
 				videogames: state.allVideogames,
+			};
+
+		case SET_PAGE:
+			return {
+				...state,
+				paged: action.payload,
 			};
 
 		default:

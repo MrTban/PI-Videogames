@@ -12,6 +12,7 @@ import {
 	ORDER_BY_RATING,
 	GET_DETAIL,
 	RESET,
+	SET_PAGE,
 } from './types';
 
 export const getVideogames = () => async (dispatch) => {
@@ -118,5 +119,12 @@ export const getDetail = (id) => async (dispatch) => {
 export const reset = () => {
 	return {
 		type: RESET,
+	};
+};
+
+export const setPage = (payload) => {
+	return {
+		type: SET_PAGE,
+		payload,
 	};
 };
