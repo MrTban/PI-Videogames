@@ -78,7 +78,7 @@ const Home = () => {
 		dispatch(getVideogames());
 		setTimeout(() => {
 			setIsLoaded(true);
-		}, [5000]);
+		}, [6000]);
 	}, [dispatch]);
 
 	return (
