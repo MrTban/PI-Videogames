@@ -5,14 +5,9 @@ const { API_KEY } = process.env;
 
 const getInfoApi = async () => {
 	let allGames = [];
-	let apiUrl = `https://api.rawg.io/api/games?key=${API_KEY}`;
 	try {
 		for (let i = 0; i < 5; i++) {
-			const info = await axios.get(apiUrl, {
-				headers: {
-					'accept-encoding': '*',
-				},
-			});
+			const info = await axios(`https://api.rawg.io/api/games?key=${API_KEY}`);
 
 			info.data.results.map((vg) => {
 				allGames.push({
