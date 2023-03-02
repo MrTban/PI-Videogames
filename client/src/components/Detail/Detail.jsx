@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { getDetail } from '../../redux/actions';
@@ -11,10 +11,15 @@ const Detail = () => {
 
 	const gameDetail = useSelector((state) => state.detail);
 
+	const [isLoaded, setIsLoaded] = useState(false);
+
 	const { id } = useParams();
 
 	useEffect(() => {
 		dispatch(getDetail(id));
+		setTimeout(() => {
+			setIsLoaded(true);
+		}, [2000]);
 	}, [dispatch, id]);
 
 	return (
@@ -22,7 +27,7 @@ const Detail = () => {
 			<Link to='/home'>
 				<button className={style.buttoncito}>Back to Home</button>
 			</Link>
-			{Object.entries(gameDetail).length ? (
+			{isLoaded ? (
 				<div className={style.detailContainer}>
 					<div>
 						<h1>
