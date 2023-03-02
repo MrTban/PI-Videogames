@@ -18,9 +18,8 @@
 
 .paged ul li button {
 	display: block;
-	padding: 10px 20px;
+	padding: 1px 15px;
 	background: #1abc9c;
-	text-decoration: none;
 	font-weight: bold;
 	font-size: 16px;
 	border: none;
@@ -30,12 +29,11 @@
 	box-shadow: inset 0 0 6px #0f1011;
 }
 
-.paged ul li button:hover {
+.paged ul li :hover {
 	background: #28e2bc;
 	transform: scale(1.25);
 }
 
-/* .paged ul li .active {
+.paged ul li button:active {
 	background: #037e8c;
-	font-weight: bold;
-} */
+}
