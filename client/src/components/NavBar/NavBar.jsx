@@ -16,19 +16,21 @@ const NavBar = ({
 	return (
 		<div>
 			<div className={style.buttonsNav}>
-				<Link to='/'>
-					<button className={style.buttonLink}>Exit</button>
-				</Link>
-
-				<Link to='/about'>
-					<button className={style.buttonLink}>About</button>
-				</Link>
-
-				<Link to='/creategame'>
-					<button className={style.buttonLink}>Create Game</button>
-				</Link>
-
 				<SearchBar setCurrentPage={setCurrentPage} />
+
+				<div>
+					<Link to='/creategame'>
+						<button className={style.buttonLink}>Create Game</button>
+					</Link>
+
+					<Link to='/about'>
+						<button className={style.buttonLink}>About</button>
+					</Link>
+
+					<Link to='/'>
+						<button className={style.buttonLink}>Exit</button>
+					</Link>
+				</div>
 			</div>
 
 			<div>
